@@ -250,7 +250,7 @@ function selecionaCabo(dadosMotor){
   bitolaCabo = cabo[2]
   if(dadosMotor.freio == "Com Freio") freio = true
   else freio=false
-	console.log("freio", freio)
+	console.log("tipo_cabo", tipoCabo)
 
   // Filtro Bitola
   // se for 0,75, inclui na lista 1,5
@@ -261,6 +261,7 @@ function selecionaCabo(dadosMotor){
   }
   //resolver
   dadosCaboResolver = bdCabos.filter(({tipo}) => tipo == "CR");
+
   //freio
   if(freio){
     dadosCaboFreio = bdCabos.filter(({tipo}) => tipo == "CF");
@@ -353,28 +354,38 @@ console.log("listaUnico", listaUnico)
   }
   //filtro
   dadosCabos = dadosCabos.filter(({comprimento}) => comprimento == selectElementComprimento.value);
-  dadosCaboResolver = bdCabos.filter(({tipo, conector, comprimento}) => tipo == "CR" && conector == selectElementTipoConector.value && comprimento == selectElementComprimento.value);
+  // se for motor absoluto, não precisa de cabo de resolver
+  if(tipoCabo == "SPC"){
+    dadosCaboResolver = []
+  }else{
+    dadosCaboResolver = bdCabos.filter(({tipo, conector, comprimento}) => tipo == "CR" && conector == selectElementTipoConector.value && comprimento == selectElementComprimento.value);
+  }
   if (freio){
 	dadosCaboFreio = bdCabos.filter(({tipo, conector, instalacao, comprimento}) => tipo == "CF" && conector == selectElementTipoConector.value && instalacao == selectElementInstalacao.value && comprimento == selectElementComprimento.value);	  
   }else{
 	dadosCaboFreio=[]
   }
 
+
   // se encotrou mais de 1 resultado, filtra novamente pela bitola (caso cabos 0,75 e 1,5)
   if(dadosCabos.length > 1){
     dadosCabos = dadosCabos.filter(({bitola}) => bitola == bitolaCabo);
   }
-  console.log(dadosCaboResolver,dadosCaboFreio )
+  console.log(dadosCaboResolver,dadosCaboFreio, dadosCaboResolver.length )
 
   if (Object.keys(dadosCabos).length == 1){
-	if(freio){
-		txtFreio = "Código Cabo Freio: " + dadosCaboFreio[0].codigo + " Referência: " + dadosCaboFreio[0].referencia
-	}else{
-		txtFreio=""
-	}
-    txtCaboSelecionado.innerText = "Código Cabo Potência: " + dadosCabos[0].codigo + " Referência: " + dadosCabos[0].referencia + "\n"+
-	"Código Cabo Resolver: " + dadosCaboResolver[0].codigo + " Referência: " + dadosCaboResolver[0].referencia + "\n"+
-	txtFreio
+    if(dadosCaboResolver.length>0){
+      txtResolver ="\n" + "Código Cabo Resolver: " + dadosCaboResolver[0].codigo + " Referência: " + dadosCaboResolver[0].referencia
+    }else{
+      txtResolver=""
+    }
+    if(dadosCaboFreio.length>0){
+      txtFreio = "\n" + "Código Cabo Freio: " + dadosCaboFreio[0].codigo + " Referência: " + dadosCaboFreio[0].referencia
+    }else{
+      txtFreio=""
+    }
+    txtCaboSelecionado.innerText = "Código Cabo Potência: " + dadosCabos[0].codigo + " Referência: " + dadosCabos[0].referencia +
+    txtResolver + txtFreio
     // se demais itens já foram selecionados
   }else{
     txtCaboSelecionado.innerText = ""
