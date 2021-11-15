@@ -14,25 +14,6 @@ listaFeedback.forEach(function(item, i) {
 
 selecionaMotor(bdSWA)
 
-/*motorSelecionado = {
-  cabo: "CP-...m-4x0,75-B",
-  carcaca: 56,
-  codigo: "10362947",
-  corrente: "2,5",
-  feedback: "Resolver",
-  freio: "Sem Freio",
-  ipi: 0,
-  preco: 7096.23,
-  referencia: "SWA 562-2,5-20 ",
-  rotacao: 2000,
-  servoconversor: "SCA06B05P0D2",
-  tensao: "220-240",
-  torque: 2.5,
-}
-selecionaSca06(motorSelecionado)
-*/
-
-
 function selecionaMotor(dadosSwa){
   let selectElementFeedback = document.getElementById('feedback');
   let selectElementFreio = document.getElementById('freio');
@@ -50,9 +31,9 @@ function selecionaMotor(dadosSwa){
   listaUnico.forEach(function(item, i) {
     selectElementFeedback.add(new Option(item));
   })
-  //verifica se o elemento ainda existe na nova lista
+  //verifica se o elemento ainda existe na nova lista ou for item único na lista
   found = listaUnico.find(element => element == elementoSelecionado);
-  if(found){
+  if(found || listaUnico.length == 1){
     selectElementFeedback.value = elementoSelecionado
   }
   //filtro
@@ -67,9 +48,9 @@ function selecionaMotor(dadosSwa){
   listaUnico.forEach(function(item, i) {
     selectElementFreio.add(new Option(item));
   })
-  //verifica se o elemento ainda existe na nova lista
+  //verifica se o elemento ainda existe na nova lista ou for item único na lista
   found = listaUnico.find(element => element == elementoSelecionado);
-  if(found){
+  if(found || listaUnico.length == 1){
     selectElementFreio.value = elementoSelecionado
   }
   //filtro
@@ -84,9 +65,9 @@ function selecionaMotor(dadosSwa){
   listaUnico.forEach(function(item, i) {
     selectElementTensao.add(new Option(item));
   })
-  //verifica se o elemento ainda existe na nova lista
+  //verifica se o elemento ainda existe na nova lista ou for item único na lista
   found = listaUnico.find(element => element == elementoSelecionado);
-  if(found){
+  if(found || listaUnico.length == 1){
     selectElementTensao.value = elementoSelecionado
   }
   //filtro
@@ -101,10 +82,13 @@ function selecionaMotor(dadosSwa){
   listaUnico.forEach(function(item, i) {
     selectElementRotacao.add(new Option(item));
   })
-  //verifica se o elemento ainda existe na nova lista
+  //verifica se o elemento ainda existe na nova lista ou for item único na lista
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementRotacao.value = elementoSelecionado
+  }
+  if(listaUnico.length == 1){
+    selectElementRotacao.value = listaUnico[0]
   }
   //filtro
   dadosSwa = dadosSwa.filter(({rotacao}) => rotacao == selectElementRotacao.value);
@@ -118,10 +102,13 @@ function selecionaMotor(dadosSwa){
   listaUnico.forEach(function(item, i) {
     selectElementTorque.add(new Option(item));
   })
-  //verifica se o elemento ainda existe na nova lista
+  //verifica se o elemento ainda existe na nova lista ou for item único na lista
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementTorque.value = elementoSelecionado
+  }
+  if(listaUnico.length == 1){
+    selectElementTorque.value = listaUnico[0]
   }
   //filtro
   dadosSwa = dadosSwa.filter(({torque}) => torque == selectElementTorque.value);
@@ -138,7 +125,6 @@ function selecionaMotor(dadosSwa){
 }
 
 function selecionaSca06(dadosMotor){
-  console.log(dadosMotor)
   let selectElementDriveSto = document.getElementById('driveSto');
   let selectElementDriveRfi = document.getElementById('driveFiltroRfi');
   let selectElementDriveFonte = document.getElementById('driveFonteInterna');
@@ -146,7 +132,6 @@ function selecionaSca06(dadosMotor){
   let txtDriveSelecionado = document.getElementById('driveSelecionado');
 
   driveBase = dadosMotor.servoconversor
-  console.log(driveBase)
   //driveBase.length
 
   //FILTRA DRIVE BASE
@@ -164,17 +149,19 @@ function selecionaSca06(dadosMotor){
   listaUnico.forEach(function(item, i) {
     selectElementDriveSto.add(new Option(item));
   })
-  //verifica se o elemento ainda existe na nova lista
+  //verifica se o elemento ainda existe na nova lista ou for item único na lista
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementDriveSto.value = elementoSelecionado
+  }
+  if(listaUnico.length == 1){
+    selectElementDriveSto.value = listaUnico[0]
   }
   //filtro
   dadosDrive = dadosDrive.filter(({sto}) => sto === selectElementDriveSto.value);
 
   //FILTRO RFI
   listaUnico = _.uniq(_.map(dadosDrive, item => item.filtro));
-  console.log(listaUnico)
   //atualiza html
   elementoSelecionado = selectElementDriveRfi.value
   selectElementDriveRfi.innerHTML=""
@@ -182,10 +169,13 @@ function selecionaSca06(dadosMotor){
   listaUnico.forEach(function(item, i) {
     selectElementDriveRfi.add(new Option(item));
   })
-  //verifica se o elemento ainda existe na nova lista
+  //verifica se o elemento ainda existe na nova lista ou for item único na lista
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementDriveRfi.value = elementoSelecionado
+  }
+  if(listaUnico.length == 1){
+    selectElementDriveRfi.value = listaUnico[0]
   }
   //filtro
   dadosDrive = dadosDrive.filter(({filtro}) => filtro === selectElementDriveRfi.value);
@@ -199,10 +189,13 @@ function selecionaSca06(dadosMotor){
   listaUnico.forEach(function(item, i) {
     selectElementDriveFonte.add(new Option(item));
   })
-  //verifica se o elemento ainda existe na nova lista
+  //verifica se o elemento ainda existe na nova lista ou for item único na lista
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementDriveFonte.value = elementoSelecionado
+  }
+  if(listaUnico.length == 1){
+    selectElementDriveFonte.value = listaUnico[0]
   }
   //filtro
   dadosDrive = dadosDrive.filter(({fonte}) => fonte === selectElementDriveFonte.value);
@@ -216,10 +209,13 @@ function selecionaSca06(dadosMotor){
   listaUnico.forEach(function(item, i) {
     selectElementDriveManual.add(new Option(item));
   })
-  //verifica se o elemento ainda existe na nova lista
+  //verifica se o elemento ainda existe na nova lista ou for item único na lista
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementDriveManual.value = elementoSelecionado
+  }
+  if(listaUnico.length == 1){
+    selectElementDriveManual.value = listaUnico[0]
   }
   //filtro
   dadosDrive = dadosDrive.filter(({manual}) => manual === selectElementDriveManual.value);
@@ -230,10 +226,6 @@ function selecionaSca06(dadosMotor){
   }else{
     txtDriveSelecionado.innerText = ""
   }
-
-
-  console.log("testedrive",dadosDrive)
-  console.log(dadosDrive)
 }
 
 function selecionaCabo(dadosMotor){
@@ -272,10 +264,6 @@ function selecionaCabo(dadosMotor){
   }else{
 	  dadosCaboFreio=[]
   }
-//	console.log("tipo_cabo", freio, tipoCabo,bitolaCabo)
-
-  console.log("caboFreio", dadosCaboFreio)
-  console.log("bdCabos", bdCabos)
   //TIPO CONECTOR
   listaUnico = _.uniq(_.map(dadosCabos, item => item.conector));
   novalista=[]
@@ -284,11 +272,11 @@ function selecionaCabo(dadosMotor){
 	dadosCaboFreio = bdCabos.filter(({tipo, conector}) => tipo == tipoCaboFreio && conector == item);
 	//filtra itens
     if(dadosCaboResolver.length>0 && (!freio || dadosCaboFreio.length>0)){
-		novalista.push(item)
+	  	novalista.push(item)
     }
   })
   listaUnico = novalista
-  console.log("listaunico_conector",listaUnico)
+
   //atualiza html
   let elementoSelecionado = selectElementTipoConector.value
   selectElementTipoConector.innerHTML=""
@@ -296,10 +284,13 @@ function selecionaCabo(dadosMotor){
   listaUnico.forEach(function(item, i) {
     selectElementTipoConector.add(new Option(item));
   })
-  //verifica se o elemento ainda existe na nova lista
+  //verifica se o elemento ainda existe na nova lista ou se for item único na lista
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementTipoConector.value = elementoSelecionado
+  }
+  if(listaUnico.length == 1){
+    selectElementTipoConector.value = listaUnico[0]
   }
   //filtro
   dadosCabos = dadosCabos.filter(({conector}) => conector === selectElementTipoConector.value);
@@ -308,7 +299,6 @@ function selecionaCabo(dadosMotor){
 
   //INSTALAÇÃO
   listaUnico = _.uniq(_.map(dadosCabos, item => item.instalacao));
-  console.log("listaUnico", listaUnico)
 
   novalista=[]
   listaUnico.forEach(item=>{
@@ -320,7 +310,6 @@ function selecionaCabo(dadosMotor){
     }
   })
   listaUnico = novalista
-  console.log("listaunico_inst",listaUnico)
   //atualiza html
   elementoSelecionado = selectElementInstalacao.value
   selectElementInstalacao.innerHTML=""
@@ -328,10 +317,13 @@ function selecionaCabo(dadosMotor){
   listaUnico.forEach(function(item, i) {
     selectElementInstalacao.add(new Option(item));
   })
-  //verifica se o elemento ainda existe na nova lista
+  //verifica se o elemento ainda existe na nova lista ou for item único na lista
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementInstalacao.value = elementoSelecionado
+  }
+  if(listaUnico.length == 1){
+    selectElementInstalacao.value = listaUnico[0]
   }
   //filtro
   dadosCabos = dadosCabos.filter(({instalacao}) => instalacao === selectElementInstalacao.value);
@@ -340,8 +332,8 @@ function selecionaCabo(dadosMotor){
   listaUnico = _.uniq(_.map(dadosCabos, item => item.comprimento));
   novalista=[]
   listaUnico.forEach(item=>{
-	dadosCaboResolver = bdCabos.filter(({tipo, conector, comprimento}) => tipo == "CR" && conector == selectElementTipoConector.value && comprimento == item);
-	dadosCaboFreio = bdCabos.filter(({tipo, conector, comprimento}) => tipo == tipoCaboFreio && conector == selectElementTipoConector.value && comprimento == item);
+    dadosCaboResolver = bdCabos.filter(({tipo, conector, comprimento}) => tipo == "CR" && conector == selectElementTipoConector.value && comprimento == item);
+    dadosCaboFreio = bdCabos.filter(({tipo, conector, comprimento}) => tipo == tipoCaboFreio && conector == selectElementTipoConector.value && comprimento == item);
     if(dadosCaboResolver.length>0 && (dadosMotor.freio == "Sem Freio" || dadosCaboFreio.length>0)){
     //if(dadosCaboResolver.length>0 && dadosCaboFreio.length>0){
       novalista.push(item)
@@ -351,14 +343,17 @@ function selecionaCabo(dadosMotor){
   //atualiza html
   elementoSelecionado = selectElementComprimento.value
   selectElementComprimento.innerHTML=""
-  selectElementComprimento.add(new Option("Tipo Instalação"));
+  selectElementComprimento.add(new Option("Comprimento"));
   listaUnico.forEach(function(item, i) {
     selectElementComprimento.add(new Option(item));
   })
-  //verifica se o elemento ainda existe na nova lista
+  //verifica se o elemento ainda existe na nova lista ou for item único na lista
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementComprimento.value = elementoSelecionado
+  }
+  if(listaUnico.length == 1){
+    selectElementComprimento.value = listaUnico[0]
   }
   //filtro
   dadosCabos = dadosCabos.filter(({comprimento}) => comprimento == selectElementComprimento.value);
@@ -379,7 +374,6 @@ function selecionaCabo(dadosMotor){
   if(dadosCabos.length > 1){
     dadosCabos = dadosCabos.filter(({bitola}) => bitola == bitolaCabo);
   }
-  console.log(dadosCaboResolver,dadosCaboFreio, dadosCaboResolver.length )
 
   if (Object.keys(dadosCabos).length == 1){
     if(dadosCaboResolver.length>0){
