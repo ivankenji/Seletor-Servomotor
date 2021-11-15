@@ -248,9 +248,13 @@ function selecionaCabo(dadosMotor){
   cabo = cabo.split("-")
   tipoCabo = cabo[0]
   bitolaCabo = cabo[2]
-  if(dadosMotor.freio == "Com Freio") freio = true
-  else freio=false
-	console.log("tipo_cabo", tipoCabo)
+//  if(dadosMotor.freio == "Com Freio") freio = true
+//  else freio=false
+  if(tipoCabo=="SPC"){
+    tipoCaboFreio = "CF-SBC"
+  }else{
+    tipoCaboFreio = "CF"
+  }
 
   // Filtro Bitola
   // se for 0,75, inclui na lista 1,5
@@ -263,17 +267,21 @@ function selecionaCabo(dadosMotor){
   dadosCaboResolver = bdCabos.filter(({tipo}) => tipo == "CR");
 
   //freio
-  if(freio){
-    dadosCaboFreio = bdCabos.filter(({tipo}) => tipo == "CF");
+  if(dadosMotor.freio == "Com Freio"){
+    dadosCaboFreio = bdCabos.filter(({tipo}) => tipo == tipoCaboFreio);
   }else{
 	  dadosCaboFreio=[]
   }
+//	console.log("tipo_cabo", freio, tipoCabo,bitolaCabo)
+
+  console.log("caboFreio", dadosCaboFreio)
+  console.log("bdCabos", bdCabos)
   //TIPO CONECTOR
   listaUnico = _.uniq(_.map(dadosCabos, item => item.conector));
   novalista=[]
   listaUnico.forEach(item=>{
 	dadosCaboResolver = bdCabos.filter(({tipo, conector}) => tipo == "CR" && conector == item);
-	dadosCaboFreio = bdCabos.filter(({tipo, conector}) => tipo == "CF" && conector == item);
+	dadosCaboFreio = bdCabos.filter(({tipo, conector}) => tipo == tipoCaboFreio && conector == item);
 	//filtra itens
     if(dadosCaboResolver.length>0 && (!freio || dadosCaboFreio.length>0)){
 		novalista.push(item)
@@ -300,15 +308,15 @@ function selecionaCabo(dadosMotor){
 
   //INSTALAÇÃO
   listaUnico = _.uniq(_.map(dadosCabos, item => item.instalacao));
-console.log("listaUnico", listaUnico)
+  console.log("listaUnico", listaUnico)
 
   novalista=[]
   listaUnico.forEach(item=>{
 	// cabo de resolver é sempre movimentação
-	dadosCaboFreio = bdCabos.filter(({tipo, conector, instalacao}) => tipo == "CF" && conector == selectElementTipoConector.value && instalacao == item);
+	dadosCaboFreio = bdCabos.filter(({tipo, conector, instalacao}) => tipo == tipoCaboFreio && conector == selectElementTipoConector.value && instalacao == item);
 	//filtra itens
     if(!freio || dadosCaboFreio.length>0){
-		novalista.push(item)
+	  	novalista.push(item)
     }
   })
   listaUnico = novalista
@@ -333,8 +341,8 @@ console.log("listaUnico", listaUnico)
   novalista=[]
   listaUnico.forEach(item=>{
 	dadosCaboResolver = bdCabos.filter(({tipo, conector, comprimento}) => tipo == "CR" && conector == selectElementTipoConector.value && comprimento == item);
-	dadosCaboFreio = bdCabos.filter(({tipo, conector, comprimento}) => tipo == "CF" && conector == selectElementTipoConector.value && comprimento == item);
-    if(dadosCaboResolver.length>0 && (!freio || dadosCaboFreio.length>0)){
+	dadosCaboFreio = bdCabos.filter(({tipo, conector, comprimento}) => tipo == tipoCaboFreio && conector == selectElementTipoConector.value && comprimento == item);
+    if(dadosCaboResolver.length>0 && (dadosMotor.freio == "Sem Freio" || dadosCaboFreio.length>0)){
     //if(dadosCaboResolver.length>0 && dadosCaboFreio.length>0){
       novalista.push(item)
     }
@@ -360,8 +368,8 @@ console.log("listaUnico", listaUnico)
   }else{
     dadosCaboResolver = bdCabos.filter(({tipo, conector, comprimento}) => tipo == "CR" && conector == selectElementTipoConector.value && comprimento == selectElementComprimento.value);
   }
-  if (freio){
-	dadosCaboFreio = bdCabos.filter(({tipo, conector, instalacao, comprimento}) => tipo == "CF" && conector == selectElementTipoConector.value && instalacao == selectElementInstalacao.value && comprimento == selectElementComprimento.value);	  
+  if (dadosMotor.freio == "Com Freio"){
+	dadosCaboFreio = bdCabos.filter(({tipo, conector, instalacao, comprimento}) => tipo == tipoCaboFreio && conector == selectElementTipoConector.value && instalacao == selectElementInstalacao.value && comprimento == selectElementComprimento.value);	  
   }else{
 	dadosCaboFreio=[]
   }
