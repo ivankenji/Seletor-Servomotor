@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+</head>
+<body>
+
+  <h2>Dados do Motor</h2>
+  <section class="item">
+	  <label for="feedback">Realimentação:</label>
+	  <select id="feedback">
+		<option value="teste">teste1</option>
+	  </select>
+  </section>
+  <br/>
+  <label for="freio">Freio:</label>
+  <select id="freio"></select>
+  <br/>
+  <label for="tensao">Tensão:</label>
+  <select id="tensao"></select>
+  <br/>
+  <label for="rpm">Rotação:</label>
+  <select id="rpm"></select>
+  <br/>
+  <label for="torque">Torque:</label>
+  <select id="torque"></select>
+
+  <div id="motorSelecionado">
+    Teste
+  </div>
+
+  <div>
+    <h2>Cabo</h2>
+    <label for="tipoConector">Tipo Conector:</label>
+    <select id="tipoConector"></select>
+    <br/>
+    <label for="instalacao">Instalação Cabo:</label>
+    <select id="instalacao"></select>
+    <br/>
+    <label for="comprimentoCabo">Comprimento:</label>
+    <select id="comprimentoCabo"></select>
+  </div>
+  <div id="caboSelecionado">
+    Teste
+  </div>
+
+  <div>
+    <h2>Dados do Servoconversor</h2>
+    <label for="driveSto">STO:</label>
+    <select id="driveSto"></select>
+    <br/>
+    <label for="driveFiltroRfi">Filtro RFI:</label>
+    <select id="driveFiltroRfi"></select>
+    <br/>
+    <label for="driveFonteInterna">Fonte 24V Interna:</label>
+    <select id="driveFonteInterna"></select>
+    <br/>
+    <label for="driveManual">Manual:</label>
+    <select id="driveManual"></select>
+    <br/>
+    <div id="driveSelecionado">
+      Teste
+    </div>
+      
+  </div>
+
+</body>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
+<script src="./js/db/BD_Swa.js"></script>
+<script src="./js/db/BD_Cabos.js"></script>
+<script src="./js/db/BD_Sca06.js"></script>
+<script src="./js/seletorswa.js"></script>
+
+</html>
