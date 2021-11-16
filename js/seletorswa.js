@@ -20,7 +20,6 @@ function selecionaMotor(dadosSwa){
   let selectElementTensao = document.getElementById('tensao');
   let selectElementRotacao = document.getElementById('rpm');
   let selectElementTorque = document.getElementById('torque');
-  let txtMotorSelecionado = document.getElementById('motorSelecionado');
 
   //FEEDBACK
   listaUnico = _.uniq(_.map(dadosSwa, item => item.feedback));
@@ -113,15 +112,59 @@ function selecionaMotor(dadosSwa){
   //filtro
   dadosSwa = dadosSwa.filter(({torque}) => torque == selectElementTorque.value);
 
-  if (Object.keys(dadosSwa).length == 1){
-    txtMotorSelecionado.innerText = "Código Motor: " + dadosSwa[0].codigo + " Referência: " + dadosSwa[0].referencia
-    selecionaSca06(dadosSwa[0])
-    selecionaCabo(dadosSwa[0])
+  function DeleteRows(tableID) {
+    let tableRef = document.getElementById(tableID);
+    var rowCount = tableRef.rows.length;
+    for (var i = rowCount - 1; i > 0; i--) {
+      tableRef.deleteRow(i);
+    }
+  }
+  // deleta linhas da tabela
+  DeleteRows("tabelaResultado")
+  
+  if (dadosSwa.length == 1){
+    servoSelecionado = selecionaSca06(dadosSwa[0])
+    caboSelecionado = selecionaCabo(dadosSwa[0])
+
     // se demais itens já foram selecionados
+    addRow('tabelaResultado', dadosSwa[0]);
+    if(servoSelecionado.length > 0){
+      addRow('tabelaResultado', servoSelecionado[0]);
+    }
+    // CP
+    if(caboSelecionado[0].length > 0){
+      addRow('tabelaResultado', caboSelecionado[0][0]);
+    }
+    // CR
+    if(caboSelecionado[1].length > 0){
+      addRow('tabelaResultado', caboSelecionado[1][0]);
+    }
+    // CF
+    if(caboSelecionado[2].length > 0){
+      addRow('tabelaResultado', caboSelecionado[2][0]);
+    }
   }else{
-    txtMotorSelecionado.innerText = ""
+    servoSelecionado=[]
+    caboSelecionado=[]
   }
 
+  function addRow(tableID, tbDados) {
+    // Get a reference to the table
+    let tableRef = document.getElementById(tableID);
+
+    // Insert a row at the end of the table
+    let newRow = tableRef.insertRow(-1);
+  
+    // Insert a cell in the row at index 0
+    let newCellCodigo = newRow.insertCell(0);
+    let newCellReferencia = newRow.insertCell(1);
+  
+    // Append a text node to the cell
+    let textCodigo = document.createTextNode(tbDados.codigo);
+    let textReferencia = document.createTextNode(tbDados.referencia);
+    newCellCodigo.appendChild(textCodigo);
+    newCellReferencia.appendChild(textReferencia);
+  }
 }
 
 function selecionaSca06(dadosMotor){
@@ -129,7 +172,6 @@ function selecionaSca06(dadosMotor){
   let selectElementDriveRfi = document.getElementById('driveFiltroRfi');
   let selectElementDriveFonte = document.getElementById('driveFonteInterna');
   let selectElementDriveManual = document.getElementById('driveManual');
-  let txtDriveSelecionado = document.getElementById('driveSelecionado');
 
   driveBase = dadosMotor.servoconversor
   //driveBase.length
@@ -220,19 +262,13 @@ function selecionaSca06(dadosMotor){
   //filtro
   dadosDrive = dadosDrive.filter(({manual}) => manual === selectElementDriveManual.value);
 
-  if (Object.keys(dadosDrive).length == 1){
-    txtDriveSelecionado.innerText = "Código Drive: "+ dadosDrive[0].codigo  + " Modelo: " + dadosDrive[0].referencia
-    // se demais itens já foram selecionados
-  }else{
-    txtDriveSelecionado.innerText = ""
-  }
+  return (dadosDrive)
 }
 
 function selecionaCabo(dadosMotor){
   let selectElementTipoConector = document.getElementById('tipoConector');
   let selectElementInstalacao = document.getElementById('instalacao');
   let selectElementComprimento = document.getElementById('comprimentoCabo');
-  let txtCaboSelecionado = document.getElementById('caboSelecionado');
 
   // separar dados do cabo
   cabo = dadosMotor.cabo
@@ -374,24 +410,7 @@ function selecionaCabo(dadosMotor){
   if(dadosCabos.length > 1){
     dadosCabos = dadosCabos.filter(({bitola}) => bitola == bitolaCabo);
   }
-
-  if (Object.keys(dadosCabos).length == 1){
-    if(dadosCaboResolver.length>0){
-      txtResolver ="\n" + "Código Cabo Resolver: " + dadosCaboResolver[0].codigo + " Referência: " + dadosCaboResolver[0].referencia
-    }else{
-      txtResolver=""
-    }
-    if(dadosCaboFreio.length>0){
-      txtFreio = "\n" + "Código Cabo Freio: " + dadosCaboFreio[0].codigo + " Referência: " + dadosCaboFreio[0].referencia
-    }else{
-      txtFreio=""
-    }
-    txtCaboSelecionado.innerText = "Código Cabo Potência: " + dadosCabos[0].codigo + " Referência: " + dadosCabos[0].referencia +
-    txtResolver + txtFreio
-    // se demais itens já foram selecionados
-  }else{
-    txtCaboSelecionado.innerText = ""
-  }
+  return [dadosCabos,dadosCaboResolver,dadosCaboFreio]
 }
 
 const change = (e) => {

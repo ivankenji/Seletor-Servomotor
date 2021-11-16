@@ -1,0 +1,23 @@
+body {
+    font-family: arial, sans-serif;
+}
+body h2{
+    margin: 0;
+    font-size: 1.1rem;
+    padding-top: 0.5rem;
+}
+.Tabela_Resultado {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+.Tabela_Resultado td, th {
+    border: 1px solid #969696;
+    text-align: left;
+    padding: 8px;
+}
+  
+.Tabela_Resultado tr:nth-child(even) {
+    background-color: #adb2ff;
+}
