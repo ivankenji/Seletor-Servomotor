@@ -21,3 +21,9 @@ body h2{
 .Tabela_Resultado tr:nth-child(even) {
     background-color: #adb2ff;
 }
+
+.hide{
+
+    visibility: collapse
+    
+}

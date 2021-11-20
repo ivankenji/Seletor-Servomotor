@@ -17,27 +17,27 @@
         <td>Realimentação</td>
         <td><select id="feedback"></select></td>
       </tr>
-      <tr>
+      <tr id="linhaFreio">
         <td>Freio</td>
         <td><select id="freio"></select></td>
       </tr>
-      <tr>
+      <tr id="linhaTensao">
         <td>Tensão</td>
         <td><select id="tensao"></select></td>
       </tr>
-      <tr>
+      <tr id="linhaRotacao">
         <td>Rotação</td>
         <td><select id="rpm"></select></td>
       </tr>
-      <tr>
+      <tr id="linhaTorque">
         <td>Torque</td>
         <td><select id="torque"></select></td>
       </tr>
     </table>
   </div>
-  <div>
+  <div id="containerCabo">
     <h2>Cabo</h2>
-    <table id="tabelaDadosCabo" class="Tabela_Filtro">
+    <table class="Tabela_Filtro">
       <tr>
         <td>Tipo Conector</td>
         <td><select id="tipoConector"></select></td>
@@ -52,9 +52,9 @@
       </tr>
     </table>
   </div>
-  <div>
+  <div id="containerDrive">
     <h2>Dados do Servoconversor</h2>
-    <table id="tabelaDadosDrive" class="Tabela_Filtro">
+    <table class="Tabela_Filtro">
       <tr>
         <td>STO</td>
         <td><select id="driveSto"></select></td>
@@ -74,7 +74,7 @@
     </table>
   </div>
   <br/>
-  <div>
+  <div id="containerResultado">
     <table id="tabelaResultado" class="Tabela_Resultado">
       <tr>
         <th>Código</th>

@@ -15,11 +15,21 @@ listaFeedback.forEach(function(item, i) {
 selecionaMotor(bdSWA)
 
 function selecionaMotor(dadosSwa){
+
   let selectElementFeedback = document.getElementById('feedback');
   let selectElementFreio = document.getElementById('freio');
   let selectElementTensao = document.getElementById('tensao');
   let selectElementRotacao = document.getElementById('rpm');
   let selectElementTorque = document.getElementById('torque');
+
+  // oculta todos os campos
+  document.getElementById("linhaFreio").className = "hide"
+  document.getElementById("linhaTensao").className = "hide"
+  document.getElementById("linhaRotacao").className = "hide"
+  document.getElementById("linhaTorque").className = "hide"
+  document.getElementById("containerCabo").className = "hide"
+  document.getElementById("containerDrive").className = "hide"
+  document.getElementById("containerResultado").className = "hide"
 
   //FEEDBACK
   listaUnico = _.uniq(_.map(dadosSwa, item => item.feedback));
@@ -52,6 +62,12 @@ function selecionaMotor(dadosSwa){
   if(found || listaUnico.length == 1){
     selectElementFreio.value = elementoSelecionado
   }
+  //verifica se tem algum item na lista
+  if(listaUnico.length>1){
+    document.getElementById("linhaFreio").className = ""
+  }else{
+    document.getElementById("linhaFreio").className = "hide"
+  }
   //filtro
   dadosSwa = dadosSwa.filter(({freio}) => freio == selectElementFreio.value);
 
@@ -77,7 +93,7 @@ function selecionaMotor(dadosSwa){
   //atualiza html
   elementoSelecionado = selectElementRotacao.value
   selectElementRotacao.innerHTML=""
-  selectElementRotacao.add(new Option("Selecione a Tensão"));
+  selectElementRotacao.add(new Option("Selecione a Rotação"));
   listaUnico.forEach(function(item, i) {
     selectElementRotacao.add(new Option(item));
   })
@@ -97,7 +113,7 @@ function selecionaMotor(dadosSwa){
   //atualiza html
   elementoSelecionado = selectElementTorque.value
   selectElementTorque.innerHTML=""
-  selectElementTorque.add(new Option("Selecione a Tensão"));
+  selectElementTorque.add(new Option("Selecione o Torque"));
   listaUnico.forEach(function(item, i) {
     selectElementTorque.add(new Option(item));
   })
