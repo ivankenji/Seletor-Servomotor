@@ -318,6 +318,7 @@ function selecionaCabo(dadosMotor){
   let selectElementInstalacao = document.getElementById('instalacao');
   let selectElementComprimento = document.getElementById('comprimentoCabo');
 
+  
   // separar dados do cabo
   cabo = dadosMotor.cabo
   cabo = cabo.replace(/\s/g, '')
