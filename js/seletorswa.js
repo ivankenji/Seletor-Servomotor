@@ -63,7 +63,7 @@ function selecionaMotor(dadosSwa){
     selectElementFreio.value = elementoSelecionado
   }
   //verifica se tem algum item na lista
-  if(listaUnico.length>1){
+  if(listaUnico.length>=1){
     document.getElementById("linhaFreio").className = ""
   }else{
     document.getElementById("linhaFreio").className = "hide"
@@ -85,6 +85,12 @@ function selecionaMotor(dadosSwa){
   if(found || listaUnico.length == 1){
     selectElementTensao.value = elementoSelecionado
   }
+  //verifica se tem algum item na lista
+  if(listaUnico.length>=1){
+    document.getElementById("linhaTensao").className = ""
+  }else{
+    document.getElementById("linhaTensao").className = "hide"
+  }
   //filtro
   dadosSwa = dadosSwa.filter(({tensao}) => tensao == selectElementTensao.value);
 
@@ -104,6 +110,12 @@ function selecionaMotor(dadosSwa){
   }
   if(listaUnico.length == 1){
     selectElementRotacao.value = listaUnico[0]
+  }
+  //verifica se tem algum item na lista
+  if(listaUnico.length>=1){
+    document.getElementById("linhaRotacao").className = ""
+  }else{
+    document.getElementById("linhaRotacao").className = "hide"
   }
   //filtro
   dadosSwa = dadosSwa.filter(({rotacao}) => rotacao == selectElementRotacao.value);
@@ -125,6 +137,11 @@ function selecionaMotor(dadosSwa){
   if(listaUnico.length == 1){
     selectElementTorque.value = listaUnico[0]
   }
+  if(listaUnico.length>=1){
+    document.getElementById("linhaTorque").className = ""
+  }else{
+    document.getElementById("linhaTorque").className = "hide"
+  }
   //filtro
   dadosSwa = dadosSwa.filter(({torque}) => torque == selectElementTorque.value);
 
@@ -138,10 +155,14 @@ function selecionaMotor(dadosSwa){
   // deleta linhas da tabela
   DeleteRows("tabelaResultado")
   
+  // se tiver um motor selecionado, habilita seleção do drive e cabos
   if (dadosSwa.length == 1){
     servoSelecionado = selecionaSca06(dadosSwa[0])
     caboSelecionado = selecionaCabo(dadosSwa[0])
-
+    document.getElementById("containerResultado").className = ""
+    document.getElementById("containerCabo").className = ""
+    document.getElementById("containerDrive").className = ""
+  
     // se demais itens já foram selecionados
     addRow('tabelaResultado', dadosSwa[0]);
     if(servoSelecionado.length > 0){
@@ -162,6 +183,9 @@ function selecionaMotor(dadosSwa){
   }else{
     servoSelecionado=[]
     caboSelecionado=[]
+    document.getElementById("containerResultado").className = "hide"
+    document.getElementById("containerCabo").className = "hide"
+    document.getElementById("containerDrive").className = "hide"
   }
 
   function addRow(tableID, tbDados) {
@@ -211,9 +235,11 @@ function selecionaSca06(dadosMotor){
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementDriveSto.value = elementoSelecionado
+  }else{
+    selectElementDriveSto.value = "Não"
   }
   if(listaUnico.length == 1){
-    selectElementDriveSto.value = listaUnico[0]
+    selectElementDriveSto.value = "listaUnico[0]"
   }
   //filtro
   dadosDrive = dadosDrive.filter(({sto}) => sto === selectElementDriveSto.value);
@@ -231,6 +257,8 @@ function selecionaSca06(dadosMotor){
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementDriveRfi.value = elementoSelecionado
+  }else{
+    selectElementDriveRfi.value = "Sim"
   }
   if(listaUnico.length == 1){
     selectElementDriveRfi.value = listaUnico[0]
@@ -251,6 +279,8 @@ function selecionaSca06(dadosMotor){
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementDriveFonte.value = elementoSelecionado
+  }else{
+    selectElementDriveFonte.value = "Não"
   }
   if(listaUnico.length == 1){
     selectElementDriveFonte.value = listaUnico[0]
@@ -271,6 +301,8 @@ function selecionaSca06(dadosMotor){
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementDriveManual.value = elementoSelecionado
+  }else{
+    selectElementDriveManual.value = "Sim"
   }
   if(listaUnico.length == 1){
     selectElementDriveManual.value = listaUnico[0]
@@ -340,6 +372,8 @@ function selecionaCabo(dadosMotor){
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementTipoConector.value = elementoSelecionado
+  }else{
+    selectElementTipoConector.value = "Reto"
   }
   if(listaUnico.length == 1){
     selectElementTipoConector.value = listaUnico[0]
@@ -373,6 +407,8 @@ function selecionaCabo(dadosMotor){
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementInstalacao.value = elementoSelecionado
+  }else{
+    selectElementInstalacao.value = "Fixa"
   }
   if(listaUnico.length == 1){
     selectElementInstalacao.value = listaUnico[0]
@@ -403,6 +439,8 @@ function selecionaCabo(dadosMotor){
   found = listaUnico.find(element => element == elementoSelecionado);
   if(found){
     selectElementComprimento.value = elementoSelecionado
+  }else{
+    selectElementComprimento.value = "3"
   }
   if(listaUnico.length == 1){
     selectElementComprimento.value = listaUnico[0]
