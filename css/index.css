@@ -4,18 +4,22 @@ body {
 body h2{
     margin: 0;
     font-size: 1.1rem;
-    padding-top: 0.5rem;
+    padding-top: 0.7rem;
+}
+.Tabela_Filtro select{
+    width: 100%;
+    padding: 5px;
 }
 .Tabela_Resultado {
-    font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    font-size: small;
 }
   
 .Tabela_Resultado td, th {
     border: 1px solid #969696;
     text-align: left;
-    padding: 8px;
+    padding: 5px;
 }
   
 .Tabela_Resultado tr:nth-child(even) {
@@ -23,7 +27,5 @@ body h2{
 }
 
 .hide{
-
-    visibility: collapse
-    
+    visibility: collapse  
 }
