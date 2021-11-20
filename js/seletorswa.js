@@ -239,7 +239,7 @@ function selecionaSca06(dadosMotor){
     selectElementDriveSto.value = "Não"
   }
   if(listaUnico.length == 1){
-    selectElementDriveSto.value = "listaUnico[0]"
+    selectElementDriveSto.value = listaUnico[0]
   }
   //filtro
   dadosDrive = dadosDrive.filter(({sto}) => sto === selectElementDriveSto.value);
